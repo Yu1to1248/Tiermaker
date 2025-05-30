@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tier List</title>
+  <style>
+    body {
+      background-color: #2e2e2e;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      padding: 20px;
+      font-size: 2em;
+      color: #e0e0e0;
+    }
+    .upload-container {
+      text-align: center;
+      margin: 10px;
+    }
+    .upload-button {
+      background-color: #444;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tier {
+      display: flex;
+      align-items: center;
+      margin: 5px 20px;
+      border: 1px solid #444;
+      background-color: black;
+      height: 100px;
+    }
+    .tier-label {
+      width: 150px;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px;
+      color: black;
+    }
+    .tier.S .tier-label { background-color: #ff7f7f; }
+    .tier.A .tier-label { background-color: #ffbf80; }
+    .tier.B .tier-label { background-color: #ffff80; }
+    .tier.C .tier-label { background-color: #80ff80; }
+    .tier.D .tier-label { background-color: #80cfff; }
+    .tier.E .tier-label { background-color: #9999ff; }
+    .tier.F .tier-label { background-color: #ff99ff; }
+    .tier-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px;
+      flex-grow: 1;
+      align-items: center;
+    }
+    .tier-images img, .unassigned img {
+      max-height: 80px;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border 0.2s ease;
+    }
+    .tier-images img:hover, .unassigned img:hover {
+      border: 2px solid white;
+    }
+    .unassigned {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 20px;
+      justify-content: center;
+    }
+    .unassigned img {
+      max-height: 60px;
+    }
+    .img-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .delete-btn {
+      display: none;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 2px 5px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .img-wrapper.selected .delete-btn {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>TIER LIST MAKER</h1>
+  <div class="upload-container">
+    <input type="file" id="imageUpload" accept="image/*" multiple>
+    <button class="upload-button" onclick="document.getElementById('imageUpload').click()">Upload Images</button>
+  </div>
+
+  <div class="tier S"><div class="tier-label">Tier S</div><div class="tier-images" data-tier="S"></div></div>
+  <div class="tier A"><div class="tier-label">Tier A</div><div class="tier-images" data-tier="A"></div></div>
+  <div class="tier B"><div class="tier-label">Tier B</div><div class="tier-images" data-tier="B"></div></div>
+  <div class="tier C"><div class="tier-label">Tier C</div><div class="tier-images" data-tier="C"></div></div>
+  <div class="tier D"><div class="tier-label">Tier D</div><div class="tier-images" data-tier="D"></div></div>
+  <div class="tier E"><div class="tier-label">Tier E</div><div class="tier-images" data-tier="E"></div></div>
+  <div class="tier F"><div class="tier-label">Tier F</div><div class="tier-images" data-tier="F"></div></div>
+
+  <h2 style="text-align:center; color:#ccc;">Unassigned</h2>
+  <div class="unassigned" id="unassigned"></div>
+
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const unassigned = document.getElementById('unassigned');
+
+    imageUpload.addEventListener('change', (event) => {
+      Array.from(event.target.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const wrapper = createImageWrapper(e.target.result);
+          unassigned.appendChild(wrapper);
+        }
+        reader.readAsDataURL(file);
+      });
+    });
+
+    function createImageWrapper(src) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'img-wrapper';
+      wrapper.draggable = true;
+      wrapper.innerHTML = `<img src="${src}" draggable="false"><button class="delete-btn">×</button>`;
+
+      wrapper.addEventListener('click', () => {
+        wrapper.classList.toggle('selected');
+      });
+      wrapper.querySelector('.delete-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        wrapper.remove();
+      });
+
+      wrapper.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', src);
+        wrapper.classList.add('dragging');
+      });
+      wrapper.addEventListener('dragend', (e) => {
+        wrapper.classList.remove('dragging');
+      });
+
+      return wrapper;
+    }
+
+    document.querySelectorAll('.tier-images, #unassigned').forEach(container => {
+      container.addEventListener('dragover', (e) => {
+        e.preventDefault();
+      });
+      container.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const src = e.dataTransfer.getData('text/plain');
+        const dragged = document.querySelector(`.img-wrapper img[src="${src}"]`).parentElement;
+        container.appendChild(dragged);
+      });
+    });
+  </script>
+</body>
+</html>
