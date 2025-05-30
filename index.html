@@ -48,25 +48,24 @@
       gap: 5px;
     }
 
-    .tier-row {
+.tier-row {
   display: flex;
-  align-items: stretch;
+  height: 100px; /* 明示的に高さ指定 */
   background-color: black;
-  min-height: 100px;
 }
 
 .tier-label {
-  flex: 0 0 150px;
+  width: 150px;
+  height: 100%; /* tier-rowにフィット */
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   font-size: 1.2em;
-  height: 100%;
-  color: black; /* ← ここで明示的に黒に固定 */
+  color: black; /* 黒文字指定 */
 }
 
-/* 各Tierの背景色と文字色（黒） */
+/* ラベル色（背景）と文字色 */
 .tier-S { background-color: #e11d48; color: black; }
 .tier-A { background-color: #f97316; color: black; }
 .tier-B { background-color: #eab308; color: black; }
@@ -77,14 +76,13 @@
 
 .tier-dropzone {
   flex: 1;
+  height: 100%;
   display: flex;
   align-items: center;
   padding: 5px;
   overflow-x: auto;
   gap: 5px;
-  min-height: 100px;
 }
-
 
     .tier-dropzone img {
       max-height: 80px;
