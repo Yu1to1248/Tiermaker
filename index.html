@@ -15,7 +15,7 @@
 
     h1 {
       text-align: center;
-      color: #eee;
+      color: white;
       margin-bottom: 20px;
     }
 
@@ -56,20 +56,23 @@
     }
 
     .tier-label {
-      width: 150px;
-      text-align: center;
+      flex: 0 0 150px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
       font-size: 1.2em;
-      padding: 10px 0;
+      color: white;
     }
 
-    .tier-S { background-color: #f66; }
-    .tier-A { background-color: #fb6; }
-    .tier-B { background-color: #ff6; color: black; }
-    .tier-C { background-color: #6f6; color: black; }
-    .tier-D { background-color: #6af; }
-    .tier-E { background-color: #99f; }
-    .tier-F { background-color: #f6f; }
+    .tier-S { background-color: #e11d48; }
+    .tier-A { background-color: #f97316; }
+    .tier-B { background-color: #eab308; color: black; }
+    .tier-C { background-color: #10b981; color: black; }
+    .tier-D { background-color: #3b82f6; }
+    .tier-E { background-color: #6366f1; }
+    .tier-F { background-color: #a855f7; }
 
     .tier-dropzone {
       flex: 1;
@@ -145,13 +148,13 @@
   </div>
 
   <div class="tier-list" id="tierList">
-    <div class="tier-row"><div class="tier-label tier-S">Tier S</div><div class="tier-dropzone" data-tier="S"></div></div>
-    <div class="tier-row"><div class="tier-label tier-A">Tier A</div><div class="tier-dropzone" data-tier="A"></div></div>
-    <div class="tier-row"><div class="tier-label tier-B">Tier B</div><div class="tier-dropzone" data-tier="B"></div></div>
-    <div class="tier-row"><div class="tier-label tier-C">Tier C</div><div class="tier-dropzone" data-tier="C"></div></div>
-    <div class="tier-row"><div class="tier-label tier-D">Tier D</div><div class="tier-dropzone" data-tier="D"></div></div>
-    <div class="tier-row"><div class="tier-label tier-E">Tier E</div><div class="tier-dropzone" data-tier="E"></div></div>
-    <div class="tier-row"><div class="tier-label tier-F">Tier F</div><div class="tier-dropzone" data-tier="F"></div></div>
+    <div class="tier-row"><div class="tier-label tier-S">S</div><div class="tier-dropzone" data-tier="S"></div></div>
+    <div class="tier-row"><div class="tier-label tier-A">A</div><div class="tier-dropzone" data-tier="A"></div></div>
+    <div class="tier-row"><div class="tier-label tier-B">B</div><div class="tier-dropzone" data-tier="B"></div></div>
+    <div class="tier-row"><div class="tier-label tier-C">C</div><div class="tier-dropzone" data-tier="C"></div></div>
+    <div class="tier-row"><div class="tier-label tier-D">D</div><div class="tier-dropzone" data-tier="D"></div></div>
+    <div class="tier-row"><div class="tier-label tier-E">E</div><div class="tier-dropzone" data-tier="E"></div></div>
+    <div class="tier-row"><div class="tier-label tier-F">F</div><div class="tier-dropzone" data-tier="F"></div></div>
   </div>
 
   <h2 style="text-align: center; margin-top: 40px;">Unassigned</h2>
