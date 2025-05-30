@@ -48,46 +48,45 @@
       gap: 5px;
     }
 
-.tier-row {
-  display: flex;
-  height: 100px; /* 明示的に高さ指定 */
-  background-color: black;
-}
+    .tier-row {
+      display: flex;
+      height: 100px;
+      background-color: black;
+    }
 
-.tier-label {
-  width: 150px;
-  height: 100%; /* tier-rowにフィット */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  color: black; /* 黒文字指定 */
-}
+    .tier-label {
+      width: 150px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: black;
+    }
 
-/* ラベル色（背景）と文字色 */
-.tier-S { background-color: #e11d48; color: black; }
-.tier-A { background-color: #f97316; color: black; }
-.tier-B { background-color: #eab308; color: black; }
-.tier-C { background-color: #10b981; color: black; }
-.tier-D { background-color: #3b82f6; color: black; }
-.tier-E { background-color: #6366f1; color: black; }
-.tier-F { background-color: #a855f7; color: black; }
+    .tier-S { background-color: #e11d48; color: black; }
+    .tier-A { background-color: #f97316; color: black; }
+    .tier-B { background-color: #eab308; color: black; }
+    .tier-C { background-color: #10b981; color: black; }
+    .tier-D { background-color: #3b82f6; color: black; }
+    .tier-E { background-color: #6366f1; color: black; }
+    .tier-F { background-color: #a855f7; color: black; }
 
-.tier-dropzone {
-  flex: 1;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  overflow-x: auto;
-  gap: 5px;
-}
+    .tier-dropzone {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      overflow-x: auto;
+      gap: 5px;
+      cursor: pointer;
+    }
 
     .tier-dropzone img {
       max-height: 80px;
-      cursor: grab;
-      position: relative;
+      cursor: pointer;
       transition: transform 0.2s;
     }
 
@@ -106,8 +105,7 @@
 
     .unassigned img {
       max-height: 60px;
-      cursor: grab;
-      position: relative;
+      cursor: pointer;
       transition: transform 0.2s;
     }
 
@@ -174,7 +172,6 @@
           container.className = 'image-container';
           const img = document.createElement('img');
           img.src = reader.result;
-          img.draggable = true;
 
           const del = document.createElement('button');
           del.innerText = "×";
@@ -183,35 +180,32 @@
 
           img.addEventListener('click', () => {
             document.querySelectorAll('img').forEach(el => el.classList.remove('selected'));
-            img.classList.toggle('selected');
+            img.classList.add('selected');
+            selectedImage = container;
           });
 
           container.appendChild(img);
           container.appendChild(del);
           unassigned.appendChild(container);
-
-          img.addEventListener('dragstart', (e) => {
-            selectedImage = container;
-          });
         };
         reader.readAsDataURL(file);
       });
     });
 
     document.querySelectorAll('.tier-dropzone').forEach(zone => {
-      zone.addEventListener('dragover', (e) => e.preventDefault());
-      zone.addEventListener('drop', () => {
+      zone.addEventListener('click', () => {
         if (selectedImage) {
           zone.appendChild(selectedImage);
+          document.querySelectorAll('img').forEach(el => el.classList.remove('selected'));
           selectedImage = null;
         }
       });
     });
 
-    unassigned.addEventListener('dragover', (e) => e.preventDefault());
-    unassigned.addEventListener('drop', () => {
+    unassigned.addEventListener('click', () => {
       if (selectedImage) {
         unassigned.appendChild(selectedImage);
+        document.querySelectorAll('img').forEach(el => el.classList.remove('selected'));
         selectedImage = null;
       }
     });
