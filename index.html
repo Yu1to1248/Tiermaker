@@ -181,10 +181,15 @@
           container.appendChild(del);
 
           container.addEventListener('click', (event) => {
-            event.stopPropagation(); // 他のクリックイベントを阻止
+            event.stopPropagation();
+            const alreadySelected = container.classList.contains('selected');
             document.querySelectorAll('.image-container').forEach(el => el.classList.remove('selected'));
-            container.classList.add('selected');
-            selectedImage = container;
+            if (!alreadySelected) {
+              container.classList.add('selected');
+              selectedImage = container;
+            } else {
+              selectedImage = null;
+            }
           });
 
           unassigned.appendChild(container);
@@ -205,7 +210,7 @@
       });
     });
 
-    // 未分類エリアに戻す
+    // 未分類に戻す
     unassigned.addEventListener('click', () => {
       if (selectedImage) {
         unassigned.appendChild(selectedImage);
